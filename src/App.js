@@ -1,11 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Provider} from 'react-redux';
+import {store} from './store';
 import People from './Screens/PeopleScreen';
 const App = () => {
   return (
-    <View>
-      <People />
-    </View>
+    <Provider store={store}>
+      <View>
+        <People />
+      </View>
+    </Provider>
   );
 };
 

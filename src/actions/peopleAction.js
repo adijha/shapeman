@@ -6,5 +6,5 @@ export const PEOPLE_ACTION = {
 
 export const getPeople = () => ({
   type: PEOPLE_ACTION.GET,
-  payload: Api.getPeopleList(),
+  payload: Api(),
 });

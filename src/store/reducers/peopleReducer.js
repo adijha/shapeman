@@ -1,4 +1,4 @@
-import {PEOPLE_ACTION} from '../../actions/license';
+import {PEOPLE_ACTION} from '../../actions/peopleAction';
 
 const peopleReducer = (state = [], action) => {
   switch (action.type) {
