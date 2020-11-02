@@ -1,17 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ActivityIndicator,
   FlatList,
-  TouchableHighlight,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPeople} from '../actions/peopleAction';
-
+import Modal from '../components/Modal';
 const PeopleScreen = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPeople, setSelectedPeople] = useState(null);
   const dispatch = useDispatch();
   const people = useSelector((state) => state.people);
   useEffect(() => {
@@ -25,7 +27,11 @@ const PeopleScreen = () => {
         <FlatList
           data={people}
           renderItem={({item, index}) => (
-            <TouchableHighlight>
+            <TouchableOpacity
+              onPress={() => {
+                setModalOpen(true);
+                setSelectedPeople(index);
+              }}>
               <View style={styles.row}>
                 <Image
                   style={styles.image}
@@ -35,7 +41,7 @@ const PeopleScreen = () => {
                   {item.name && item.name.toString()}
                 </Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           )}
           enableEmptySections={true}
           keyExtractor={(item, index) => index.toString()}
@@ -43,6 +49,15 @@ const PeopleScreen = () => {
       ) : (
         <ActivityIndicator size="large" color="green" style={styles.loading} />
       )}
+
+      <Modal
+        show={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedPeople(null);
+        }}
+        people={people[selectedPeople]&&people[selectedPeople]}
+      />
     </View>
   );
 };
