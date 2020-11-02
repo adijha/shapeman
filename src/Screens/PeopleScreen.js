@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  TouchableHighlight,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPeople} from '../actions/peopleAction';
@@ -16,15 +17,22 @@ const PeopleScreen = () => {
     dispatch(getPeople());
   }, [dispatch]);
   console.log(people);
+
   return (
     <View style={styles.container}>
-      {people[0] ? (
+      <Text>People List</Text>
+      {people ? (
         <FlatList
-          data={people.results}
-          renderItem={() => {
-            return <Text>bsujbsdfuj</Text>;
-          }}
-          // keyExtractor={(item) => item.name}
+          data={people}
+          renderItem={({item, index}) => (
+            <TouchableHighlight>
+              <View style={styles.row}>
+                <Text>{item.name}</Text>
+              </View>
+            </TouchableHighlight>
+          )}
+          enableEmptySections={true}
+          keyExtractor={(item, index) => index}
         />
       ) : (
         <ActivityIndicator
@@ -41,16 +49,11 @@ export default PeopleScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 10,
+    alignItems: 'center',
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
+    padding: 10,
+    fontSize: 18,
+    height: 44,
   },
 });
